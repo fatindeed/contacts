@@ -1,9 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.fatindeed.contacts" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>Contacts</name>
-    <description>
-        Hello World sample application that responds to the deviceready event.
-    </description>
+    <name>Social Contacts</name>
+    <description>Keep contact's profile updated with social network</description>
     <author email="fatindeed@hotmail.com" href="http://www.fatindeed.com/">James Zhu</author>
     <feature name="http://api.phonegap.com/1.0/device" />
     <preference name="permissions" value="none" />

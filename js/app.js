@@ -1,6 +1,11 @@
-if(!navigator.contacts) {
-	alert('Contacts API not supported', 'Error');
+var onDeviceReady = function() {
+	if(!navigator.contacts) {
+		alert('Contacts API not supported', 'Error');
+		return false;
+	}
+	angular.bootstrap(document, ['contactsApp']);
 }
+document.addEventListener('deviceready', onDeviceReady);
 
 angular.module('contactsApp', [
   'ionic',

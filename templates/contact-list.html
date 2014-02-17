@@ -1,0 +1,8 @@
+<view title="'My Contacts'">
+  <content has-header="true" has-tabs="true">
+    <div class="list"> <a class="item item-avatar" href="#/contacts/view/:contactId" ng-repeat="contact in contacts"> <img src="http://ionicframework.com/img/docs/venkman.jpg" />
+      <h2>{{contact.displayName}}</h2>
+      <p>{{contact.ims}}{{contact.birthday}}{{contact.categories}}</p>
+    </a> </div>
+  </content>
+</view>

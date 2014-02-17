@@ -1,16 +1,7 @@
-var onDeviceReady = function() {
-	if(!navigator.contacts) {
-		alert('Contacts API not supported', 'Error');
-		return false;
-	}
-	angular.bootstrap(document, ['contactsApp']);
-}
-document.addEventListener('deviceready', onDeviceReady);
-
 angular.module('contactsApp', [
   'ionic',
-  'contacts.services',
-  'contacts.controllers'
+  'AppServices',
+  'AppControllers'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
   // Ionic uses AngularUI Router which uses the concept of states

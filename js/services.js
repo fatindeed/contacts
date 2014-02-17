@@ -1,4 +1,4 @@
-angular.module('contacts.services', [])
+angular.module('AppServices', [])
 /**
  * A simple example service that returns some data.
  */

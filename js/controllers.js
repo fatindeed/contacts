@@ -1,15 +1,22 @@
-angular.module('contacts.controllers', [])
-// A simple controller that fetches a list of data from a service
-.controller('ContactListCtrl', function($scope, PhoneContacts) {
-	PhoneContacts.find().then(function(contacts) {
-		$scope.contacts = contacts;
-	}, function(error) {
-		console.log(error);
+angular.module('AppControllers', [])
+.controller('ContactListCtrl', function($scope) {
+	ionic.Platform.ready(function(){
+		var options = new ContactFindOptions();
+		options.filter = '';
+		options.multiple = true;
+		var fields = ['*']
+		navigator.contacts.find(fields, function(contacts) {
+			$scope.$apply(function() {
+				$scope.contacts = contacts;
+			});
+		}, function(error) {
+			$scope.$apply(function() {
+				$scope.error = error;
+			});
+		}, options);
 	});
-	//$scope.orderProp = 'age';
 })
-// A simple controller that shows a tapped item's data
-.controller('ContactDetailCtrl', function($scope, $stateParams, PhoneContacts) {
+.controller('ContactDetailCtrl', function($scope, $stateParams, Contacts) {
 	$scope.phone = Phone.get({phoneId: $routeParams.phoneId}, function(phone) {
 		$scope.mainImageUrl = phone.images[0];
 	});

@@ -1,8 +1,11 @@
 <view title="'My Contacts'">
   <content has-header="true" has-tabs="true">
-    <div class="list"> <a class="item item-avatar" href="#/contacts/view/:contactId" ng-repeat="contact in contacts"> <img src="http://ionicframework.com/img/docs/venkman.jpg" />
+    <div class="list" ng-hide="isLoading"> <a class="item item-avatar" href="#/contacts/view/{{contact.id}}" ng-repeat="contact in contacts"> <img src="{{contact.photoImage}}" />
       <h2>{{contact.displayName}}</h2>
-      <p>{{contact.ims}}{{contact.birthday}}{{contact.categories}}</p>
+      <p><i class="icon ion-social-googleplus"></i> <i class="icon ion-social-apple"></i> <i class="icon ion-social-windows"></i></p>
     </a> </div>
+    <h2 class="padding" ng-show="isLoading">
+    	<i class="icon ion-loading-a"></i> Loading contacts...
+    </h2>
   </content>
 </view>

@@ -1,48 +1,30 @@
 angular.module('AppServices', [])
-/**
- * A simple example service that returns some data.
- */
-.factory('PhoneContacts', function($rootScope, $q) {
+.factory('ContactsService', function($rootScope, $q) {
   return {
-		update: function() {
-			var contact = navigator.contacts.create();
-			contact.displayName = "Plumber";
-			contact.nickname = "Plumber";            // specify both to support all devices
-			
-			// populate some fields
-			var name = new ContactName();
-			name.givenName = "Jane";
-			name.familyName = "Doe";
-			contact.name = name;
-			
-			// save to device
-			contact.save(function(contacts) {
-				$rootScope.$apply(function() {
-					deferred.resolve(contacts);
-				});
-			}, function(error) {
-				$rootScope.$apply(function() {
-					deferred.reject(error);
-				});
-			});
-			return deferred.promise;
-		},
-		find: function(filter) {
-			var deferred = $q.defer();
-			//var options = new ContactFindOptions();
-			//options.filter = filter;
-			//options.multiple = true;
-			var fields = ['id', 'displayName', 'name', 'nickname', 'ims', 'birthday', 'note', 'photos', 'categories'];
-			navigator.contacts.find(fields, function(contacts) {
-				$rootScope.$apply(function() {
-					deferred.resolve(contacts);
-				});
-			}, function(error) {
-				$rootScope.$apply(function() {
-					deferred.reject(error);
-				});
-			});
-			return deferred.promise;
+		slice: function(contacts, offset, size) {
+			var endOffset = offset + size > contacts.length ? offset + size : contacts.length;
+			var i = offset, j = 0, results = new Array();
+			while(i < endOffset) {
+				if(contacts[i].photos != null) {
+					contacts[i].photoImage = contacts[i].photos[0].value;
+				}
+				else {
+					contacts[i].photoImage = 'img/default-photo.png';
+				}
+				if(contacts[i].displayName == null) {
+					if(contacts[i].name != null) {
+						contacts[i].displayName = contacts[i].name.familyName + contacts[i].name.givenName;
+					}
+					else {
+						contacts[i].displayName = '- No Name -';
+					}
+				}
+				results[j] = contacts[i];
+				i++;
+				j++;
+			}
+			console.log(results);
+			return results;
 		}
   };
 });

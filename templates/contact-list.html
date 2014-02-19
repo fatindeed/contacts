@@ -1,5 +1,5 @@
 <view title="'My Contacts'">
-  <content has-header="true" has-tabs="true" on-infinite-scroll="loadMore">
+  <content has-header="true" has-tabs="true">
     <div class="list">
       <label class="item item-input"> <i class="icon ion-search placeholder-icon"></i>
         <input type="text" placeholder="Search" ng-model="query" />
@@ -9,6 +9,5 @@
         <h2>{{contact.displayName}}</h2>
         <p><i class="icon ion-social-googleplus"></i> <i class="icon ion-social-apple"></i> <i class="icon ion-social-windows"></i></p>
       </a></div>
-    <infinite-scroll></infinite-scroll>
   </content>
 </view>

@@ -1,9 +1,6 @@
 angular.module('AppControllers', [])
 .controller('ContactListCtrl', function($scope, ContactsService) {
-	$scope.offset = 0;
-	$scope.loadMore = function() {
-		console.log('offset: ' + $scope.offset);
-		if($scope.offset < 0) return false;
+	ionic.Platform.ready(function() {
 		if(navigator.contacts != undefined) {
 			var fields = ['displayName', 'name', 'photos'];
 			var options = new ContactFindOptions();
@@ -11,14 +8,7 @@ angular.module('AppControllers', [])
 			options.multiple = true;
 			navigator.contacts.find(fields, function(contacts) {
 				$scope.$apply(function() {
-					results = ContactsService.slice(contacts, $scope.offset, 20);
-					for(var i = 0; i < results.length; i++) {
-						$scope.contacts.push(results[i]);
-						$scope.offset++;
-					}
-					if($scope.offset >= contacts.length) {
-						$scope.offset = -1;
-					}
+					$scope.contacts = ContactsService.slice(contacts, 0, contacts.length);
 				});
 			}, function(error) {
 				$scope.$apply(function() {
@@ -34,9 +24,6 @@ angular.module('AppControllers', [])
 				{'id':3,'photoImage':'img/default-photo.png','displayName':'Test User 3'}
 			];
 		}
-  };
-	ionic.Platform.ready(function() {
-		$scope.loadMore();
 	});
 })
 .controller('ContactDetailCtrl', function($scope, $stateParams, ContactsService) {

@@ -27,3 +27,8 @@ angular.module('AppServices', [])
 		}
   };
 });
+
+function photoNotFound(img) {
+	img.src = 'img/default-photo.png';
+	img.onerror = null;
+}

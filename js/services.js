@@ -23,7 +23,6 @@ angular.module('AppServices', [])
 				i++;
 				j++;
 			}
-			console.log(results);
 			return results;
 		}
   };

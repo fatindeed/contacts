@@ -3,16 +3,12 @@ angular.module('AppControllers', [])
 	$scope.isLoading = true;
 	$scope.offset = 0;
 	ionic.Platform.ready(function() {
-		$scope.$apply(function() {
-			$scope.isLoading = false;
-		});
-		console.log('start call load more first time.');
+		$scope.isLoading = false;
 		var fields = ['displayName', 'name', 'photos'];
 		var options = new ContactFindOptions();
 		options.filter = '';
 		options.multiple = true;
 		navigator.contacts.find(fields, function(contacts) {
-			console.log('contacts loaded.');
 			$scope.$apply(function() {
 				$scope.contacts = ContactsService.slice(contacts, 0, contacts.length);
 			});
@@ -21,7 +17,6 @@ angular.module('AppControllers', [])
 				$scope.error = error;
 			});
 		}, options);
-		console.log('finish call load more first time.');
 	});
 	/*$scope.loadMore = function() {
 		if($scope.offset < 0) return false;

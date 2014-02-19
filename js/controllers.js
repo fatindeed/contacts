@@ -7,10 +7,23 @@ angular.module('AppControllers', [])
 			$scope.isLoading = false;
 		});
 		console.log('start call load more first time.');
-		$scope.loadMore();
+		var fields = ['displayName', 'name', 'photos'];
+		var options = new ContactFindOptions();
+		options.filter = '';
+		options.multiple = true;
+		navigator.contacts.find(fields, function(contacts) {
+			console.log('contacts loaded.');
+			$scope.$apply(function() {
+				$scope.contacts = ContactsService.slice(contacts, 0, contacts.length);
+			});
+		}, function(error) {
+			$scope.$apply(function() {
+				$scope.error = error;
+			});
+		}, options);
 		console.log('finish call load more first time.');
 	});
-	$scope.loadMore = function() {
+	/*$scope.loadMore = function() {
 		if($scope.offset < 0) return false;
 		var fields = ['displayName', 'name', 'photos'];
 		var options = new ContactFindOptions();
@@ -32,7 +45,7 @@ angular.module('AppControllers', [])
 				$scope.error = error;
 			});
 		}, options);
-  }
+  }*/
 })
 .controller('ContactDetailCtrl', function($scope, $stateParams, Contacts) {
 	$scope.phone = Phone.get({phoneId: $routeParams.phoneId}, function(phone) {

@@ -1,16 +1,14 @@
 angular.module('AppControllers', [])
 .controller('ContactListCtrl', function($scope, ContactsService) {
-	$scope.isLoading = true;
 	$scope.offset = 0;
 	ionic.Platform.ready(function() {
-		$scope.isLoading = false;
 		var fields = ['displayName', 'name', 'photos'];
 		var options = new ContactFindOptions();
 		options.filter = '';
 		options.multiple = true;
 		navigator.contacts.find(fields, function(contacts) {
 			$scope.$apply(function() {
-				$scope.contacts = ContactsService.slice(contacts, 0, contacts.length);
+				$scope.contacts = ContactsService.slice(contacts, 0, 10);
 			});
 		}, function(error) {
 			$scope.$apply(function() {

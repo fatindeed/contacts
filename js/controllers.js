@@ -1,50 +1,66 @@
 angular.module('AppControllers', [])
 .controller('ContactListCtrl', function($scope, ContactsService) {
 	$scope.offset = 0;
-	ionic.Platform.ready(function() {
-		var fields = ['displayName', 'name', 'photos'];
-		var options = new ContactFindOptions();
-		options.filter = '';
-		options.multiple = true;
-		navigator.contacts.find(fields, function(contacts) {
-			$scope.$apply(function() {
-				$scope.contacts = ContactsService.slice(contacts, 0, 10);
-			});
-		}, function(error) {
-			$scope.$apply(function() {
-				$scope.error = error;
-			});
-		}, options);
-	});
-	/*$scope.loadMore = function() {
+	$scope.loadMore = function() {
+		console.log('offset: ' + $scope.offset);
 		if($scope.offset < 0) return false;
-		var fields = ['displayName', 'name', 'photos'];
+		if(navigator.contacts != undefined) {
+			var fields = ['displayName', 'name', 'photos'];
+			var options = new ContactFindOptions();
+			options.filter = '';
+			options.multiple = true;
+			navigator.contacts.find(fields, function(contacts) {
+				$scope.$apply(function() {
+					results = ContactsService.slice(contacts, $scope.offset, 20);
+					for(var i = 0; i < results.length; i++) {
+						$scope.contacts.push(results[i]);
+						$scope.offset++;
+					}
+					if($scope.offset >= contacts.length) {
+						$scope.offset = -1;
+					}
+				});
+			}, function(error) {
+				$scope.$apply(function() {
+					$scope.error = error;
+				});
+			}, options);
+		}
+		else {
+			// fake data here
+			$scope.contacts = [
+				{'id':1,'photoImage':'img/default-photo.png','displayName':'Test User 1'},
+				{'id':2,'photoImage':'img/default-photo.png','displayName':'Test User 2'},
+				{'id':3,'photoImage':'img/default-photo.png','displayName':'Test User 3'}
+			];
+		}
+  };
+	ionic.Platform.ready(function() {
+		$scope.loadMore();
+	});
+})
+.controller('ContactDetailCtrl', function($scope, $stateParams, ContactsService) {
+	if(navigator.contacts != undefined) {
+		var fields = ['*'];
 		var options = new ContactFindOptions();
-		options.filter = '';
+		options.filter = $stateParams.contactId;
 		options.multiple = true;
 		navigator.contacts.find(fields, function(contacts) {
 			$scope.$apply(function() {
-				results = ContactsService.slice(contacts, $scope.offset, 20);
-				for(var i = 0; i < results.length; i++) {
-					$scope.contacts.push(results[i]);
-					$scope.offset++;
-				}
-				if($scope.offset >= contacts.length) {
-					$scope.offset = -1;
-				}
+				$scope.contact = ContactsService.getById(contacts, $stateParams.contactId);
 			});
 		}, function(error) {
 			$scope.$apply(function() {
 				$scope.error = error;
 			});
 		}, options);
-  }*/
-})
-.controller('ContactDetailCtrl', function($scope, $stateParams, Contacts) {
-	$scope.phone = Phone.get({phoneId: $routeParams.phoneId}, function(phone) {
-		$scope.mainImageUrl = phone.images[0];
-	});
-	$scope.setImage = function(imageUrl) {
-		$scope.mainImageUrl = imageUrl;
+	}
+	// fake data here
+	else {
+		$scope.contact = {
+			'id':1,
+			'photoImage':'img/default-photo.png',
+			'displayName':'Test User 1'
+		};
 	}
 });

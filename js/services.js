@@ -24,6 +24,16 @@ angular.module('AppServices', [])
 				j++;
 			}
 			return results;
+		},
+		getById: function(contacts, contactId) {
+			var contact;
+			for (var i = 0; i < contacts.length; i++) {
+				if(contacts[i].id == contactId) {
+					contact = contacts[i];
+					break;
+				}
+			}
+			return contact;
 		}
   };
 });

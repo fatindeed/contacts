@@ -5,16 +5,12 @@
         <h2>{{contact.displayName}}</h2>
         <p><i class="icon ion-social-googleplus"></i> <i class="icon ion-social-apple"></i> <i class="icon ion-social-windows"></i></p>
       </div>
-      <a class="item item-icon-left" href="#"> <i class="icon ion-female"></i> Start listening </a>
       <div class="item item-text-wrap"> This is a basic Card with some text. </div>
-      <a class="item item-icon-left" href="#"> <i class="icon ion-egg"></i> Start listening </a>
-      <div class="item item-text-wrap"> This is a basic Card with some text. </div>
-      <a class="item item-icon-left" href="#"> <i class="icon ion-ios7-telephone"></i> Start listening </a>
-      <div class="item item-text-wrap"> This is a basic Card with some text. </div>
-      <a class="item item-icon-left" href="#"> <i class="icon ion-home"></i> Start listening </a>
-      <div class="item item-text-wrap"> This is a basic Card with some text. </div>
-      <a class="item item-icon-left" href="#"> <i class="icon ion-email"></i> Start listening </a>
-      <div class="item item-text-wrap"> This is a basic Card with some text. </div>
-      <a class="item item-icon-left" href="#"> <i class="icon ion-social-googleplus"></i> Start listening </a></div>
+      <a ng-show="contact.birthday" class="item item-icon-left" href="#"> <i class="icon ion-egg"></i> {{contact.birthday}}</a>
+      <a ng-show="contact.phoneNumbers" class="item item-icon-left" href="#"> <i class="icon ion-ios7-telephone"></i> {{contact.phoneNumbers[0]}}</a>
+      <a ng-show="contact.addresses" class="item item-icon-left" href="#"> <i class="icon ion-home"></i> {{contact.addresses[0]}}</a>
+      <a ng-show="contact.emails" class="item item-icon-left" href="#"> <i class="icon ion-at"></i> {{contact.emails[0]}}</a>
+      <a ng-show="contact.organizations" class="item item-icon-left" href="#"> <i class="icon ion-ios7-briefcase"></i> {{contact.organizations[0].title}} @ {{contact.organizations[0].name}}</a>
+    </div>
   </content>
 </view>

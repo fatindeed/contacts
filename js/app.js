@@ -47,3 +47,7 @@ angular.module('contactsApp', [
     });
   $urlRouterProvider.otherwise('/contacts/list');
 });
+
+ionic.Platform.ready(function() {
+	angular.bootstrap(document, ['contactsApp']);
+});

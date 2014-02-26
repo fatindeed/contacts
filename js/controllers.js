@@ -1,41 +1,23 @@
 angular.module('AppControllers', [])
-.controller('ContactListCtrl', function($scope, ContactsService) {
-	if(navigator.contacts != undefined) {
-		var fields = ['displayName', 'name', 'photos'];
-		var options = new ContactFindOptions();
-		options.filter = '';
-		options.multiple = true;
-		navigator.contacts.find(fields, function(contacts) {
-			$scope.$apply(function() {
-				$scope.contacts = ContactsService.slice(contacts, 0, contacts.length);
-			});
-		}, function(error) {
-			$scope.$apply(function() {
-				$scope.error = error;
-			});
-		}, options);
-	}
-	else {
-		$scope.contacts = ContactsService.getFakeList();
-	}
+.controller('ContactListCtrl', function($scope, $ionicLoading, ContactsService) {
+	$scope.loading = $ionicLoading.show({
+		content: '<i class="icon ion-loading-a"></i> Loading Contacts...',
+		animation: 'fade-in',
+		showBackdrop: true,
+		maxWidth: 220,
+		showDelay: 500
+	});
+  ContactsService.load().then(function(msg) {
+    $scope.contacts = ContactsService.getList();
+		$scope.loading.hide();
+  }, function(msg) {
+    console.error(msg);
+  });
 })
 .controller('ContactDetailCtrl', function($scope, $stateParams, ContactsService) {
-	if(navigator.contacts != undefined) {
-		var fields = ['*'];
-		var options = new ContactFindOptions();
-		options.filter = $stateParams.contactId;
-		options.multiple = true;
-		navigator.contacts.find(fields, function(contacts) {
-			$scope.$apply(function() {
-				$scope.contact = ContactsService.getById(contacts, $stateParams.contactId);
-			});
-		}, function(error) {
-			$scope.$apply(function() {
-				$scope.error = error;
-			});
-		}, options);
-	}
-	else {
-		$scope.contact = ContactsService.getFakeRecord($stateParams.contactId);
-	}
+  ContactsService.load().then(function(msg) {
+    $scope.contact = ContactsService.getItem($stateParams.contactId);
+  }, function(msg) {
+    console.error(msg);
+  });
 });

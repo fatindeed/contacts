@@ -20,7 +20,6 @@ angular.module('AppServices', [])
 			var deferred = $q.defer();
 			var cacheResult = cache.get('contactsData');
 			if(cacheResult) {
-				console.log('read data from cache');
 				deferred.resolve(cacheResult);
 			}
 	  	else if(isPhone) {
@@ -28,11 +27,8 @@ angular.module('AppServices', [])
 				var options = new ContactFindOptions();
 				options.filter = '';
 				options.multiple = true;
-				console.log('contacts find started.');
 		  	navigator.contacts.find(fields, function(results) {
-					console.log('contacts got.');
-					console.log(results);
-		  		var i, contact, contacts = new Array();
+		  		var i, contact, contacts = new Object();
 					for(i = 0; i < results.length; i++) {
 						contact = results[i];
 						if(contact.photos != null) {
